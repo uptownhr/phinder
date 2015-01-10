@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  .page-header
+    h2
+      i.fa.fa-instagram(style='color: #517fa4')
+      | Your Profile Photo
+    if user.profile_image
+      img.profile_image(src='#{user.profile_image.images.low_resolution.url}')
+    else
+      img(src='#{images[0].images.low_resolution.url}')
+
+
+  p.lead
+    | Change your Profile Photo
+  .row
+    for image in images
+      .col-xs-3
+        a.thumbnail.make_default(href='#{image.link}', data-id='#{image.id}')
+          img(src='#{image.images.standard_resolution.url}', height='320px')
