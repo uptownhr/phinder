@@ -1,5 +1,10 @@
+var _ = require('lodash');
+var ig = require('instagram-node').instagram();
+var secrets = require('../config/secrets.js');
+var async = require('async');
+
 /*
-displays users instagram photos 
+displays users instagram photos
 */
 exports.profilePhotos = function(req, res) {
     if (req.user.photos.length == 0) {
