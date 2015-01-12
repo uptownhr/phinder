@@ -115,6 +115,7 @@ exports.skipped = function(req, res){
 
 exports.clearSkipped = function(req, res){
     req.user.skipped = [];
+    req.user.liked = [];
     req.user.save( function(err,saved){
         res.redirect('/');
     });

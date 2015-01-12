@@ -11,16 +11,16 @@ $(document).ready(function() {
     $('.skip').click( function(e){
         e.preventDefault();
         var id = $(this).data('id');
-        $.get('/skip/' + id), function(res){
-            location.reload();
-        };
+        $.get('/skip/' + id, function(res){
+            window.location.reload();
+        });
     });
 
     $('.like').click( function(e){
         e.preventDefault();
         var id = $(this).data('id');
         $.get('/like/' + id, function(res){
-            location.reload();
+            window.location.reload();
         });
     });
 });
