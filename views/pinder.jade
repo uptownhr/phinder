@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  .row
+    if target_user != null
+      .col-sm-9
+        img(src="#{target_user.profile_image.images.standard_resolution.url}", style="width:100%")
+      .col-sm-3
+        h3 #{target_user.profile.name}
+        p Los Angeles, CA
+        hr
+        .row
+          for image in target_user.photos
+            .col-md-6.col-sm-6.col-xs-3
+              a.thumbnail.switch(href='#{image.link}', data-id='#{image.id}')
+                img(src='#{image.images.thumbnail.url}')
+    else
+      .col-sm-12
+        h1 Sorry!
+        p Sorry but you've browsed through all our users! We're still new and growing but only have a small user base.
+        p If you'd like to go over your skipped users again, click on the 'Show skpped again' button below
+
+        h2 Please help
+        p You can help us grow faster by sharing Pinder with your friends
+        span.st_sharethis_large(displaytext='ShareThis')
+        span.st_facebook_large(displaytext='Facebook')
+        span.st_twitter_large(displaytext='Tweet')
+        span.st_linkedin_large(displaytext='LinkedIn')
+        span.st_pinterest_large(displaytext='Pinterest')
+        span.st_email_large(displaytext='Email')
+        script(type='text/javascript').
+          var switchTo5x=true;
+        script(type='text/javascript', src='http://w.sharethis.com/button/buttons.js')
+        script(type='text/javascript').
+          stLight.options({publisher: "6fa60442-94f9-4e35-bc48-34b25622df93", doNotHash: false, doNotCopy: false, hashAddressBar: false});
+
+
+

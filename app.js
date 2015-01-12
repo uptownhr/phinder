@@ -1,8 +1,10 @@
+console.log('starting app');
 /**
  * Module dependencies.
  */
 
 var express = require('express');
+console.log('express');
 var cookieParser = require('cookie-parser');
 var compress = require('compression');
 var session = require('express-session');
@@ -23,14 +25,11 @@ var connectAssets = require('connect-assets');
 
 //my
 var request = require('request');
-var __ = require('lodash');
-var _ = require('underscore');
 var User = require('./models/User');
 
 /**
  * Controllers (route handlers).
  */
-
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var photoController = require('./controllers/photo');
@@ -43,6 +42,8 @@ var contactController = require('./controllers/contact');
 
 var secrets = require('./config/secrets');
 var passportConf = require('./config/passport');
+
+console.log('libraries loaded');
 
 /**
  * Create Express server.
@@ -115,6 +116,8 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
+console.log('express setup');
+
 /**
  * Main routes.
  */
@@ -137,9 +140,11 @@ app.post('/account/password', passportConf.isAuthenticated, userController.postU
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
-
-app.get('/photos', passportConf.isAuthenticated, photoController.photos)
-
+//pinder
+app.get('/photos', passportConf.isAuthenticated, photoController.profilePhotos);
+app.get('/restart-skipped', passportConf.isAuthenticated, photoController.clearSkipped);
+app.get('/like/:id', passportConf.isAuthenticatedAjax, photoController.liked);
+app.get('/skip/:id', passportConf.isAuthenticatedAjax, photoController.skipped);
 /**
  * API examples routes.
  */
@@ -174,7 +179,11 @@ app.get('/api/yahoo', apiController.getYahoo);
 
 app.get('/auth/instagram', passport.authenticate('instagram'));
 app.get('/auth/instagram/callback', passport.authenticate('instagram', { failureRedirect: '/login' }), function(req, res) {
-  res.redirect(req.session.returnTo || '/');
+  if(!req.user.welcome){
+    redirect = '/photos'
+  }
+  console.log(req.session.returnTo);
+  res.redirect(redirect || req.session.returnTo || '/photos');
 });
 
 
@@ -261,6 +270,8 @@ app.get('/set/profile-image/:id', function(req,res){
   });
 });
 
+
+console.log('routes added');
 /**
  * 500 Error Handler.
  */

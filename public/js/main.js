@@ -7,4 +7,16 @@ $(document).ready(function() {
             $('.profile_image').attr('src', res.profile_image.images.low_resolution.url);
         });
     });
+
+    $('.skip').click( function(e){
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.get('/skip/' + id);
+    });
+
+    $('.like').click( function(e){
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.get('/like/' + id);
+    });
 });

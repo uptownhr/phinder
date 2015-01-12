@@ -1,6 +1,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
@@ -24,7 +25,8 @@ var userSchema = new mongoose.Schema({
 
   profile_image: {},
   photos: Array,
-
+  liked: Array,
+  skipped: Array,
 
   resetPasswordToken: String,
   resetPasswordExpires: Date
@@ -75,5 +77,13 @@ userSchema.methods.gravatar = function(size) {
   var md5 = crypto.createHash('md5').update(this.email).digest('hex');
   return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
 };
+
+/**
+ * Helper for getting all the user ids that been seen by ther user
+ */
+userSchema.methods.skipIds = function(){
+  ids = _.union(this.liked,this.skipped, []);
+  return ids;
+}
 
 module.exports = mongoose.model('User', userSchema);

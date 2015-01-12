@@ -1,8 +1,19 @@
+hr
 footer
-  .container.text-center
-    p.pull-left © 2014 Phinder, Inc. All Rights Reserved
-    ul.pull-right.list-inline
-      li
-        a(href='') Twitter
-      li
-        a(href='') Facebook
+  .container.text-center.navbar-fixed-bottom(style="background-color:#fff")
+    if title=='pinder'
+      if target_user
+        .row
+          .col-md-6
+            a.btn.btn-warning.skip(style="width: 100%", data-id="#{target_user._id}") Skip
+          .col-md-6
+            a.btn.btn-info.like(style="width: 100%", data-id="#{target_user._id}") I like it
+      else
+        a.btn.btn-warning(href="/restart-skipped", style="width: 100%") Show skipped again
+    else
+      p.pull-left © 2014 Phinder, Inc. All Rights Reserved
+      ul.pull-right.list-inline
+        li
+          a(href='') Twitter
+        li
+          a(href='') Facebook
