@@ -78,9 +78,8 @@ exports.liked = function(req, res){
                 code = 200;
                 data = saved;
             }
+            res.status(code).send(data);
         });
-
-        res.status(code).send(data);
     }else{
         res.status(code).send(data);
     }
