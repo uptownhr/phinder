@@ -43,6 +43,7 @@ exports.profilePhotos = function(req, res) {
             if (err) return next(err);
             console.log(results);
             req.user.photos = results.myRecentMedia;
+	    req.user.profile_image = results.myRecentMedia[0];
             req.user.save();
 
             res.render('api/instagram', {

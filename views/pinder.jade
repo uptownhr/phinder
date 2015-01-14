@@ -6,7 +6,10 @@ block content
       .col-sm-9
         img(src="#{target_user.profile_image.images.standard_resolution.url}", style="width:100%")
       .col-sm-3
-        h3 #{target_user.profile.name}
+        if target_user.profile.name
+          h3 #{target_user.profile.name}
+        else
+          h3 #{target_user.profile_image.user.username}
         p Los Angeles, CA
         hr
         .row
